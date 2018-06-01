@@ -29,10 +29,18 @@
 
 [Unit]
 Description="bringup @(name)"
+After=network.target network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
 ExecStart=/usr/sbin/@(name)-start
+@# EnvironmentFile=@{print (workspace_setup.rsplit( "/", 1 )[ 0 ] + "/service.env")}@
+
+TimeoutStartSec=10
+RestartSec=10
+Restart=always
+StartLimitIntervalSec=0
 
 [Install]
 WantedBy=multi-user.target
