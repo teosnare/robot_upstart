@@ -2,6 +2,11 @@
 Changelog for package robot_upstart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+teosnare.1 (2018-06-05)
+-----------------------
+* Modified systemd.conf template adding network constraint and restart options
+* Added groups option to startup command using runuser
+
 0.2.2 (2017-01-23)
 ------------------
 * Added a spin wait until ros processes exit. (`#40 <https://github.com/clearpathrobotics/robot_upstart/issues/40>`_)

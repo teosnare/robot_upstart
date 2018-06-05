@@ -96,6 +96,17 @@ if [[ "$?" != "0" ]]; then
 fi
 log info "@(name): Generated launchfile: $LAUNCH_FILENAME"
 
+@[if groups]@
+# Warn and exit if runuser is missing from the system.
+which runuser > /dev/null
+if [ "$?" != "0" ]; then
+  log err "@(name): Can't launch as unprivileged user without runuser."
+  exit 1
+fi
+
+# Punch it.
+runuser -u @(user) -g @(user) -G @(groups) roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
+@[else]@
 # Warn and exit if setuidgid is missing from the system.
 which setuidgid > /dev/null
 if [ "$?" != "0" ]; then
@@ -105,6 +116,8 @@ fi
 
 # Punch it.
 setuidgid @(user) roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
+@[end if]@
+
 PID=$!
 
 log info "@(name): Started roslaunch as background process, PID $PID, ROS_LOG_DIR=$ROS_LOG_DIR"

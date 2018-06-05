@@ -39,7 +39,7 @@ import providers
 class Job(object):
     """ Represents a ROS configuration to launch on machine startup. """
 
-    def __init__(self, name="ros", interface=None, user=None, workspace_setup=None,
+    def __init__(self, name="ros", interface=None, user=None, groups=None, workspace_setup=None,
                  rosdistro=None, master_uri=None, log_path=None):
         """Construct a new Job definition.
 
@@ -76,9 +76,11 @@ class Job(object):
         # Fall back on current user as the user to run ROS as.
         self.user = user or getpass.getuser()
 
+        self.groups = groups
+
         # Fall back on current workspace setup file if not explicitly specified.
         self.workspace_setup = workspace_setup or \
-            os.environ['CMAKE_PREFIX_PATH'].split(':')[0] + '/setup.bash'
+                               os.environ['CMAKE_PREFIX_PATH'].split(':')[0] + '/setup.bash'
 
         # Fall back on current distro if not otherwise specified.
         self.rosdistro = rosdistro or os.environ['ROS_DISTRO']
@@ -125,7 +127,7 @@ class Job(object):
         if package:
             search_paths = reversed(find_in_workspaces(project=package))
         else:
-            search_paths = ('.', )
+            search_paths = ('.',)
 
         if glob and filename:
             raise RuntimeError("You must specify only an exact filename or a glob, not both.")

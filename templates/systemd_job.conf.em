@@ -40,7 +40,7 @@ ExecStart=/usr/sbin/@(name)-start
 TimeoutStartSec=10
 RestartSec=10
 Restart=always
-StartLimitIntervalSec=0
+StartLimitInterval=0
 
 [Install]
 WantedBy=multi-user.target
