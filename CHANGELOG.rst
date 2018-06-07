@@ -2,6 +2,10 @@
 Changelog for package robot_upstart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+teosnare.2 (2018-06-07)
+-----------------------
+* Added envfile option to specify EnvironmentFile in job_conf
+
 teosnare.1 (2018-06-05)
 -----------------------
 * Modified systemd.conf template adding network constraint and restart options

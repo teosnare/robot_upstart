@@ -35,7 +35,9 @@ Wants=network-online.target
 [Service]
 Type=simple
 ExecStart=/usr/sbin/@(name)-start
-@# EnvironmentFile=@{print (workspace_setup.rsplit( "/", 1 )[ 0 ] + "/service.env")}@
+@[if envfile]@
+EnvironmentFile=@(envfile)
+@[end if]@
 
 TimeoutStartSec=10
 RestartSec=10

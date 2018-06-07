@@ -53,6 +53,8 @@ def get_argument_parser():
                    help="Specify user to launch job as.")
     p.add_argument("--groups", type=str, metavar="GROUPS",
                    help="Specify supplemental groups (comma separated) for service command execution.")
+    p.add_argument("--envfile", type=str, metavar="ENVFILE",
+                   help="Specify environment file (valid with provider=systemd)")
     p.add_argument("--setup", type=str, metavar="path/to/setup.bash",
                    help="Specify workspace setup file for the job launch context.")
     p.add_argument("--rosdistro", type=str, metavar="DISTRO",
@@ -81,7 +83,7 @@ def main():
     # Any unspecified arguments are on the args object as None. These are filled
     # in by the Job constructor when passed as Nones.
     j = robot_upstart.Job(
-        name=job_name, interface=args.interface, user=args.user, groups=args.groups,
+        name=job_name, interface=args.interface, user=args.user, groups=args.groups, envfile=args.envfile,
         workspace_setup=args.setup, rosdistro=args.rosdistro,
         master_uri=args.master, log_path=args.logdir)
 
