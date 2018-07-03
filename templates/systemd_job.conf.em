@@ -29,8 +29,12 @@
 
 [Unit]
 Description="bringup @(name)"
-After=network.target network-online.target
+After=network.target network-online.target @[if requires]@ @(requires) @[end if]@ 
+
 Wants=network-online.target
+@[if requires]@
+Requires=@(requires)
+@[end if]@
 
 [Service]
 Type=simple

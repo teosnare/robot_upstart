@@ -55,12 +55,16 @@ def get_argument_parser():
                    help="Specify supplemental groups (comma separated) for service command execution.")
     p.add_argument("--envfile", type=str, metavar="ENVFILE",
                    help="Specify environment file (valid with provider=systemd)")
+    p.add_argument("--requires", type=str, metavar="REQUIRES",
+                   help="Specify Requires and After units (space separated) for service (valid with provider=systemd)")
     p.add_argument("--setup", type=str, metavar="path/to/setup.bash",
                    help="Specify workspace setup file for the job launch context.")
     p.add_argument("--rosdistro", type=str, metavar="DISTRO",
                    help="Specify ROS distro this is for.")
     p.add_argument("--master", type=str, metavar="http://MASTER:11311",
                    help="Specify an alternative ROS_MASTER_URI for the job launch context.")
+    p.add_argument("--wait", action='store_true',
+                   help="pass the --wait flag to roslaunch. This will be desired if the nodes spawned by this job are intended to connect to an existing master")
     p.add_argument("--logdir", type=str, metavar="path/to/logs",
                    help="Specify an a value for ROS_LOG_DIR in the job launch context.")
     p.add_argument("--augment", action='store_true',
@@ -84,6 +88,7 @@ def main():
     # in by the Job constructor when passed as Nones.
     j = robot_upstart.Job(
         name=job_name, interface=args.interface, user=args.user, groups=args.groups, envfile=args.envfile,
+        requires=args.requires,
         workspace_setup=args.setup, rosdistro=args.rosdistro,
         master_uri=args.master, log_path=args.logdir)
 
@@ -117,6 +122,9 @@ def main():
         provider = providers.Systemd
     if args.symlink:
         j.symlink = True
+
+    if args.wait:
+        j.roslaunch_wait = True
 
     j.install(Provider=provider)
 

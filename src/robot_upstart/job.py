@@ -39,7 +39,7 @@ import providers
 class Job(object):
     """ Represents a ROS configuration to launch on machine startup. """
 
-    def __init__(self, name="ros", interface=None, user=None, groups=None, envfile=None, workspace_setup=None,
+    def __init__(self, name="ros", interface=None, user=None, groups=None, envfile=None, requires=None, workspace_setup=None,
                  rosdistro=None, master_uri=None, log_path=None):
         """Construct a new Job definition.
 
@@ -58,6 +58,8 @@ class Job(object):
         :type groups: str
         :param envfile: environment file (valid with systemd provider)
         :type envfile: str
+        :param requires: Specify Requires and After units (space separated) for service (valid with provider=systemd)
+        :type requires: str
         :param workspace_setup: Location of the workspace setup file to source for
             the job's ROS context. Defaults to the current workspace.
         :type workspace_setup: str
@@ -83,6 +85,7 @@ class Job(object):
         self.groups = groups
 
         self.envfile = envfile
+        self.requires = requires
 
         # Fall back on current workspace setup file if not explicitly specified.
         self.workspace_setup = workspace_setup or \

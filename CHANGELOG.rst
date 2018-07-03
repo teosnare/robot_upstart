@@ -2,6 +2,11 @@
 Changelog for package robot_upstart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+teosnare.3 (2018-06-13)
+-----------------------
+* Added requires option to specify Requires service dependency in job_conf
+* Added wait option to pass --wait flag to roslaunch
+
 teosnare.2 (2018-06-07)
 -----------------------
 * Added envfile option to specify EnvironmentFile in job_conf

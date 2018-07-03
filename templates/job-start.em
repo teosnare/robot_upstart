@@ -105,7 +105,7 @@ if [ "$?" != "0" ]; then
 fi
 
 # Punch it.
-runuser -u @(user) -g @(user) -G @(groups) roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
+runuser -u @(user) -g @(user) -G @(groups) -- roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
 @[else]@
 # Warn and exit if setuidgid is missing from the system.
 which setuidgid > /dev/null
